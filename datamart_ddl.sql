@@ -1,7 +1,8 @@
+DROP TABLE IF EXISTS analysis.dm_rfm_segments;
+
 CREATE TABLE analysis.dm_rfm_segments (
-	user_id int4 NOT NULL,
-	recency int4 NOT NULL DEFAULT 0,
-	frequency int4 NOT NULL DEFAULT 0,
-	monetary_value int4 NOT NULL DEFAULT 0,
-    CONSTRAINT dm_rfm_segments_pkey PRIMARY KEY (user_id)
+	user_id INT NOT NULL PRIMARY KEY,
+	recency INT NOT NULL CHECK(recency >= 1 AND recency <= 5),
+	frequency INT NOT NULL CHECK(frequency >= 1 AND frequency <= 5),
+	monetary_value INT NOT NULL CHECK(monetary_value >= 1 AND monetary_value <= 5)
 );
