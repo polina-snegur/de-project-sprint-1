@@ -16,5 +16,6 @@ LEFT JOIN
         ON u.id = o.user_id
         AND o.status = (SELECT id FROM analysis.v_orderstatuses WHERE key = 'Closed')
         AND EXTRACT (YEAR FROM o.order_ts) >= 2022
+WHERE o.order_id IS NOT NULL
 GROUP BY u.id
 ;

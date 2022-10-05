@@ -8,7 +8,7 @@ CREATE TABLE analysis.tmp_rfm_frequency (
 INSERT INTO analysis.tmp_rfm_frequency (user_id, frequency)
 SELECT 
     u.id AS user_id,
-    NTILE(5) OVER (ORDER BY COUNT(o.order_id) NULLS FIRST) AS frequency
+    NTILE(5) OVER (ORDER BY COUNT(o.order_id)) AS frequency
 FROM 
     analysis.v_users AS u
 LEFT JOIN
@@ -16,5 +16,6 @@ LEFT JOIN
         ON u.id = o.user_id
         AND o.status = (SELECT id FROM analysis.v_orderstatuses WHERE key = 'Closed')
         AND EXTRACT (YEAR FROM o.order_ts) >= 2022
+WHERE o.order_id IS NOT NULL
 GROUP BY u.id
 ;
